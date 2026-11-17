@@ -215,52 +215,58 @@ Visit [Project Repository](https://github.com/max-w-a-r-e/TinyMDE) for more info
     </div>
   </main>
 
-  <script type="module">
-    import { TinyMDE } from '../dist/tinymde.js';
+  <!-- Load UMD bundle (works directly via file:/// without CORS issues and via HTTP) -->
+  <script src="../dist/tinymde.umd.js"></script>
+  <script>
+    (function() {
+      function start() {
+        var TinyMDE = (window.TinyMDE && (window.TinyMDE.TinyMDE || window.TinyMDE.default)) || window.TinyMDE;
+        if (!TinyMDE || typeof TinyMDE.init !== 'function') {
+          console.error('[TinyMDE Demo] Library not loaded properly:', window.TinyMDE);
+          return;
+        }
 
-    // Initialize TinyMDE
-    const editor = TinyMDE.init({
-      selector: '#demo-textarea',
-      preview: true,
-      placeholder: 'Type your markdown here...'
-    });
+        var editor = TinyMDE.init({
+          selector: '#demo-textarea',
+          preview: true,
+          placeholder: 'Type your markdown here...'
+        });
 
-    const originalTextarea = document.getElementById('demo-textarea');
-    const syncMirror = document.getElementById('sync-mirror');
+        var originalTextarea = document.getElementById('demo-textarea');
+        var syncMirror = document.getElementById('sync-mirror');
 
-    const updateMirror = () => {
-      syncMirror.textContent = originalTextarea.value;
-    };
+        function updateMirror() {
+          if (syncMirror && originalTextarea) {
+            syncMirror.textContent = originalTextarea.value;
+          }
+        }
 
-    // Watch for synchronized input events emitted on the original textarea
-    originalTextarea.addEventListener('input', updateMirror);
-    updateMirror();
+        originalTextarea.addEventListener('input', updateMirror);
+        updateMirror();
 
-    // Demo control buttons
-    document.getElementById('btn-toggle-preview').addEventListener('click', () => {
-      editor.togglePreview();
-    });
+        document.getElementById('btn-toggle-preview').addEventListener('click', function() {
+          editor.togglePreview();
+        });
 
-    document.getElementById('btn-get-content').addEventListener('click', () => {
-      alert(editor.getContent());
-    });
+        document.getElementById('btn-get-content').addEventListener('click', function() {
+          alert(editor.getContent());
+        });
 
-    document.getElementById('btn-reset').addEventListener('click', () => {
-      editor.setContent('');
-    });
+        document.getElementById('btn-reset').addEventListener('click', function() {
+          editor.setContent('');
+        });
 
-    document.getElementById('btn-set-content').addEventListener('click', () => {
-      editor.setContent(`# Open Source Announcement: TinyMDE v0.1.0
+        document.getElementById('btn-set-content').addEventListener('click', function() {
+          editor.setContent('# Open Source Announcement: TinyMDE v0.1.0\n\nWe are proud to introduce **TinyMDE**!\n\n## Why TinyMDE?\n1. **Zero dependencies** keep bundles microscopic.\n2. Direct replacement for existing `<textarea>` forms.\n3. Live split preview ensures instant visual feedback.\n\nCheck the documentation at [TinyMDE Docs](https://github.com/max-w-a-r-e/TinyMDE).');
+        });
+      }
 
-We are proud to introduce **TinyMDE**!
-
-## Why TinyMDE?
-1. **Zero dependencies** keep bundles microscopic.
-2. Direct replacement for existing `<textarea>` forms.
-3. Live split preview ensures instant visual feedback.
-
-Check the documentation at [TinyMDE Docs](https://github.com/max-w-a-r-e/TinyMDE).`);
-    });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+      } else {
+        start();
+      }
+    })();
   </script>
 </body>
 </html>

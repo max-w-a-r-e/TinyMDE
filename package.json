@@ -22,7 +22,7 @@
   "scripts": {
     "dev": "vite",
     "demo": "vite --open /demo/index.html",
-    "build": "vite build && tsc --emitDeclarationOnly",
+    "build": "vite build && tsc --emitDeclarationOnly && node -e \"require('fs').copyFileSync('dist/tinymde.umd.cjs', 'dist/tinymde.umd.js')\"",
     "test": "vitest run",
     "test:watch": "vitest"
   },
