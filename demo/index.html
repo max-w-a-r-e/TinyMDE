@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TinyMDE - Interactive Demo (v0.1.0)</title>
+  <link rel="stylesheet" href="../dist/styles.css" />
+  <style>
+    :root {
+      --bg-page: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --card-bg: #ffffff;
+      --border-card: #cbd5e1;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .demo-header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      padding: 32px 24px;
+      text-align: center;
+      border-bottom: 1px solid #334155;
+    }
+
+    .demo-header h1 {
+      margin: 0 0 8px;
+      font-size: 2.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .demo-header p {
+      margin: 0 0 16px;
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+
+    .badges {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-version {
+      background-color: #2563eb;
+      color: #ffffff;
+    }
+
+    .badge-tech {
+      background-color: #334155;
+      color: #e2e8f0;
+    }
+
+    .demo-container {
+      max-width: 1000px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+
+    .demo-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-card);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .demo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .sync-debug {
+      margin-top: 24px;
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .sync-debug h4 {
+      margin: 0 0 8px;
+      color: #38bdf8;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sync-debug pre {
+      margin: 0;
+      font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="demo-header">
+    <h1>TinyMDE 📝</h1>
+    <p>Zero-dependency, framework-agnostic drop-in Markdown editor in TypeScript</p>
+    <div class="badges">
+      <span class="badge badge-version">v0.1.0 Release</span>
+      <span class="badge badge-tech">Zero Dependencies</span>
+      <span class="badge badge-tech">Live Split-Screen</span>
+    </div>
+  </header>
+
+  <main class="demo-container">
+    <div class="demo-card">
+      <div class="demo-actions">
+        <button id="btn-toggle-preview" class="btn">Toggle Preview</button>
+        <button id="btn-set-content" class="btn">Load Sample Article</button>
+        <button id="btn-get-content" class="btn">Get Markdown (Alert)</button>
+        <button id="btn-reset" class="btn">Clear Content</button>
+      </div>
+
+      <form id="editor-form" onsubmit="event.preventDefault(); alert('Form Submitted! Value: ' + document.getElementById('demo-textarea').value);">
+        <!-- Original Textarea replaced by TinyMDE -->
+        <textarea id="demo-textarea" name="markdown" rows="12"># TinyMDE - Getting Started
+
+Welcome to **TinyMDE**, a lightweight drop-in markdown editor!
+
+## Core Features
+- Zero runtime dependencies
+- Fast regex- and line-based markdown parser
+- Automatic synchronization with the underlying `<textarea>`
+- Split-screen live preview
+
+### Code Example
+```typescript
+import { TinyMDE } from 'tinymde';
+
+const editor = TinyMDE.init({
+  selector: '#demo-textarea',
+  preview: true
+});
+```
+
+### Formatting Showcase
+You can easily use **bold text**, *italic emphasis*, `inline code`, or create lists:
+- First item
+- Second item
+  
+Numbered steps:
+1. Initialize TinyMDE
+2. Edit your markdown
+3. Form submission receives updated content automatically!
+
+Visit [Project Repository](https://github.com/max-w-a-r-e/TinyMDE) for more information.
+</textarea>
+
+        <div style="margin-top: 16px; text-align: right;">
+          <button type="submit" class="btn btn-primary">Simulate Form Submit</button>
+        </div>
+      </form>
+
+      <!-- Sync Monitor: Demonstrates live two-way synchronization to original textarea -->
+      <div class="sync-debug">
+        <h4>Live Synced Underlying &lt;textarea&gt; Value:</h4>
+        <pre id="sync-mirror"></pre>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { TinyMDE } from '../dist/tinymde.js';
+
+    // Initialize TinyMDE
+    const editor = TinyMDE.init({
+      selector: '#demo-textarea',
+      preview: true,
+      placeholder: 'Type your markdown here...'
+    });
+
+    const originalTextarea = document.getElementById('demo-textarea');
+    const syncMirror = document.getElementById('sync-mirror');
+
+    const updateMirror = () => {
+      syncMirror.textContent = originalTextarea.value;
+    };
+
+    // Watch for synchronized input events emitted on the original textarea
+    originalTextarea.addEventListener('input', updateMirror);
+    updateMirror();
+
+    // Demo control buttons
+    document.getElementById('btn-toggle-preview').addEventListener('click', () => {
+      editor.togglePreview();
+    });
+
+    document.getElementById('btn-get-content').addEventListener('click', () => {
+      alert(editor.getContent());
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      editor.setContent('');
+    });
+
+    document.getElementById('btn-set-content').addEventListener('click', () => {
+      editor.setContent(`# Open Source Announcement: TinyMDE v0.1.0
+
+We are proud to introduce **TinyMDE**!
+
+## Why TinyMDE?
+1. **Zero dependencies** keep bundles microscopic.
+2. Direct replacement for existing `<textarea>` forms.
+3. Live split preview ensures instant visual feedback.
+
+Check the documentation at [TinyMDE Docs](https://github.com/max-w-a-r-e/TinyMDE).`);
+    });
+  </script>
+</body>
+</html>
