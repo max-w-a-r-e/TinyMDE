@@ -1,0 +1,51 @@
+{
+  "name": "tinymde",
+  "version": "0.1.0",
+  "description": "A lightweight, zero-dependency, framework-agnostic drop-in Markdown editor in TypeScript.",
+  "type": "module",
+  "main": "./dist/tinymde.umd.cjs",
+  "module": "./dist/tinymde.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/tinymde.js",
+      "require": "./dist/tinymde.umd.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/max-w-a-r-e/TinyMDE.git"
+  },
+  "homepage": "https://github.com/max-w-a-r-e/TinyMDE#readme",
+  "bugs": {
+    "url": "https://github.com/max-w-a-r-e/TinyMDE/issues"
+  },
+  "keywords": [
+    "markdown",
+    "editor",
+    "tinymde",
+    "wysiwyg",
+    "zero-dependency",
+    "typescript"
+  ],
+  "author": "TinyMDE Contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8"
+  }
+}
