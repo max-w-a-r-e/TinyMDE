@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   if (mode === 'demo') {
     return {
       root: resolve(__dirname, 'demo'),
-      base: '/tinymde/',
+      base: './',
       build: {
         outDir: resolve(__dirname, 'dist-demo'),
         emptyOutDir: true
